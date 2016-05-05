@@ -35,7 +35,9 @@
               </select>
             </li>
             <li>
-              <input type="text" placeholder="search">
+              <form name="search">
+                <input type="text" placeholder="Search">
+              </form>
             </li>
           </ul>
         </div>
@@ -43,8 +45,29 @@
     </div>
 
     <div class="container">
-      <div class="row" ng-repeat="post in view.posts | orderBy:filter">
-        <h1>{{post.title}}</h1>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="row post-container" ng-repeat="post in view.posts | orderBy:filter">
+            <div class="col-md-1 vote-section">
+              <a ng-click="view.upVote($index)">
+                <i class="fa fa-arrow-up fa-lg" aria-hidden="true"></i>
+              </a>
+                <p class="vote-number" ng-class="{'upVote': post.votes > 0, 'downVote': post.votes < 0}">{{post.votes}}</p>
+              <a ng-click="view.downVote($index)">
+                <i class="fa fa-arrow-down fa-lg" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div class="col-md-3 image-container">
+              <div style="background-image: url({{post.image}})" class="post-image"></div>
+            </div>
+            <div class="col-md-8">
+              <p class="post-title">{{post.title}}</p>
+              <p>Submitted {{post.date}} by {{post.author}}</p>
+              <p>{{post.description}}</p>
+              <p>{{post.comments.length}} comments | <span>Add comment</span></p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 

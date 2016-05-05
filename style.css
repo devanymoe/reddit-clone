@@ -1,5 +1,63 @@
 /*MAIN STYLES*/
 
+.container {
+  margin-top: 70px;
+}
+
+/*POST STYLES*/
+
+.post-container {
+  padding-bottom: 40px;
+  padding-top: 40px;
+  border-bottom: 1px solid #ddd;
+}
+
+.post-image {
+  width: 160px;
+  height: 160px;
+  background-position: center;
+  background-size: 200px auto;
+  border: 1px solid #ccc;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.vote-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-left: 42px;
+  margin-top: 8px;
+  font-weight: bold;
+  color: #aaa;
+}
+
+.vote-number {
+  margin-top: 12px;
+}
+
+.vote-section a {
+  color: #aaa;
+}
+
+.upVote {
+  color: #FF8A5F;
+}
+
+.downVote {
+  color: #7D6BFF;
+  margin-right: 3px;
+}
+
+.post-title {
+  font-size: 22px;
+  font-weight: bold;
+}
 
 /*NAV STYLES*/
 
