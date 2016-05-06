@@ -10,6 +10,25 @@ body {
 
 /*POST FORM STYLES*/
 
+.button-container {
+  margin-top: -1px;
+}
+
+.button-container .button-one{
+  padding-left: 0px;
+}
+
+.button-container .button-two {
+  padding-right: 0px;
+}
+
+.new-post-container {
+  margin-top: 69px;
+  margin-bottom: -60px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: #eee;
+}
 
 
 /*POST STYLES*/
