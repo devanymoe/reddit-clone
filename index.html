@@ -29,7 +29,7 @@
               <a href='#' ng-click="view.openPostForm()">+ Submit Post</a>
             <li>
             <li>
-              <select ng-model="filter">
+              <select ng-model="view.filter">
                 <option value="votes">Sort By Votes</option>
                 <option value="date">Sort By Date</option>
                 <option value="title">Sort By Title</option>
@@ -37,7 +37,7 @@
             </li>
             <li>
               <form name="search">
-                <input type="text" placeholder="Search">
+                <input type="text" placeholder="Search" ng-model="view.search">
               </form>
             </li>
           </ul>
@@ -62,7 +62,7 @@
       </div>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <div class="post-container" ng-repeat="post in view.posts | orderBy:filter">
+          <div class="post-container" ng-repeat="post in view.posts | orderBy:view.filter | filter:view.search">
             <div class="row">
               <div class="col-md-1 vote-section">
                 <a ng-click="view.upVote(post.title)">
@@ -95,7 +95,8 @@
                 <p>{{comment.username}}: {{comment.text}}</p>
               </div>
             </div>
-            <div class="row comment-form" ng-show="post.commentForm === true">
+            <div
+              class="row comment-form" ng-show="post.commentForm === true">
               <div class="col-md-4"></div>
               <div class="col-md-8">
                 <form name="submitComment" ng-submit="view.submitComment(post.title)">

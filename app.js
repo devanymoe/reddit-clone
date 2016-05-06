@@ -2,6 +2,8 @@ var app = angular.module("redditClone", []);
 app.controller("RedditController", function($scope) {
   $scope.view = {};
 
+  $scope.view.filter = 'votes';
+  $scope.view.search = '';
   $scope.view.newPostOpen = false;
 
   $scope.view.newPost = {
@@ -11,10 +13,10 @@ app.controller("RedditController", function($scope) {
     openComments: false,
     commentForm: false
   };
+  
   $scope.view.newComment = {
     date: moment(new Date()).fromNow()
   };
-  $scope.view.search = {};
 
   $scope.view.cancelPost = function() {
     $scope.view.newPostOpen = false;
@@ -89,12 +91,12 @@ app.controller("RedditController", function($scope) {
       date: moment(new Date()).fromNow(),
       comments: [
         {
-          username: 'Devany Moe',
-          text: 'This post sucks'
+          username: 'EspadaNumberNine',
+          text: 'Something tells me the rabbit\'s intentions are not purely altruistic.'
         },
         {
-          username: 'Brian Mathews',
-          text: 'This post rocks'
+          username: 'leonjackman',
+          text: 'Trust me, we just look for any excuse to eat bad food.'
         }
       ],
       openComments: false,
@@ -107,7 +109,24 @@ app.controller("RedditController", function($scope) {
       votes: 1247,
       description: 'Candy sweet oat cake biscuit. Tart carrot cake candy. Tart chupa chups sweet chupa chups oat cake. Wafer marshmallow cake halvah caramels dessert marshmallow sweet. Candy canes pudding sweet roll gingerbread danish powder chocolate biscuit. Bear claw jujubes sweet chocolate sweet lemon drops pie jelly beans tart.',
       date: moment('2016-05-04T00:43:51.177Z').fromNow(),
-      comments: [],
+      comments: [
+        {
+          username: 'kiwip04',
+          text: 'Shit, I\'ll never have Enya status. Guess I\'ll sail away...'
+        },
+        {
+          username: 'Zenning2',
+          text: 'Awwww.. Thats so sad... She can\'t afford to get her cats castles too. Poor kitties.'
+        },
+        {
+          username: 'mike_pants',
+          text: 'When I was a teen, I decided I was really into Yanni and Enya and listened to them both obsessively. Went so far as to going to a Yanni concert with my mother and gf. The finding-yourself phase is really weird.'
+        },
+        {
+          username: 'eatspaintchips',
+          text: 'Do you need extra litter boxes if you live in a (presumably) large castle? What if the cat is in one wing of the castle and needs to poop, but his box is on the other side of the place? I have neither a cat nor a castle (or a litter box for that matter) and I don\'t know how any of this works.'
+        }
+      ],
       openComments: false,
       commentForm: false
     },
@@ -118,7 +137,12 @@ app.controller("RedditController", function($scope) {
       votes: 752,
       description: 'Halvah cake muffin marshmallow cake ice cream. Pastry jelly beans danish dragée wafer soufflé bonbon dessert chupa chups. Cheesecake apple pie candy chupa chups liquorice brownie wafer jujubes. Ice cream lollipop biscuit gingerbread caramels marshmallow soufflé jelly beans.',
       date: moment('2016-04-01T00:43:51.177Z').fromNow(),
-      comments: [],
+      comments: [
+        {
+          username: 'ummeiko',
+          text: 'I agree. Dark Souls 3 for everyone!'
+        }
+      ],
       openComments: false,
       commentForm: false
     },
@@ -126,9 +150,9 @@ app.controller("RedditController", function($scope) {
       title: 'Let\'s be honest, it was the plan all along.',
       author: 'LilboBaggins',
       image: 'http://i.imgur.com/e7ssg1v.jpg',
-      votes: 2216,
+      votes: 1246,
       description: 'Gummies jelly-o dragée candy canes. Soufflé sugar plum pastry cupcake sugar plum cotton candy chupa chups. Dragée dessert tart jelly beans gummies soufflé fruitcake sweet roll. Caramels ice cream caramels biscuit cake candy canes dragée carrot cake.',
-      date: new Date(),
+      date: moment('2016-05-05T00:40:51.177Z').fromNow(),
       comments: [],
       openComments: false,
       commentForm: false
@@ -139,8 +163,17 @@ app.controller("RedditController", function($scope) {
       image: 'http://i.imgur.com/bl7hhHl.jpg',
       votes: 2,
       description: 'Ice cream soufflé cheesecake sesame snaps candy canes tart chocolate donut. Icing pastry sesame snaps jelly chupa chups oat cake. Danish chupa chups cake candy ice cream lollipop bear claw jelly. Lemon drops sweet gummi bears marzipan chocolate powder soufflé jelly-o chupa chups.',
-      date: new Date(),
-      comments: [],
+      date: moment('2016-03-21T00:43:51.177Z').fromNow(),
+      comments: [
+        {
+          username: 'americaninquisition',
+          text: 'I get it but I can\'t find a pun :('
+        },
+        {
+          username: 'blanchedubois',
+          text: 'I just snorted into my tea.'
+        }
+      ],
       openComments: false,
       commentForm: false
     }
@@ -172,6 +205,7 @@ app.controller("RedditController", function($scope) {
       if (title === $scope.view.posts[i].title) {
         $scope.view.posts[i].commentForm = false;
         $scope.view.posts[i].comments.push($scope.view.newComment);
+        $scope.view.posts[i].openComments = true;
         $scope.view.clearForm('newComment');
         return;
       }
