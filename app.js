@@ -11,9 +11,10 @@ app.controller("RedditController", function($scope) {
     votes: 0,
     comments: [],
     openComments: false,
-    commentForm: false
+    commentForm: false,
+    hoverIsVisible: false
   };
-  
+
   $scope.view.newComment = {
     date: moment(new Date()).fromNow()
   };
@@ -100,7 +101,8 @@ app.controller("RedditController", function($scope) {
         }
       ],
       openComments: false,
-      commentForm: false
+      commentForm: false,
+      hoverIsVisible: false
     },
     {
       title: 'One of us! One of us!',
@@ -128,7 +130,8 @@ app.controller("RedditController", function($scope) {
         }
       ],
       openComments: false,
-      commentForm: false
+      commentForm: false,
+      hoverIsVisible: false
     },
     {
       title: 'I see what they did there',
@@ -144,7 +147,8 @@ app.controller("RedditController", function($scope) {
         }
       ],
       openComments: false,
-      commentForm: false
+      commentForm: false,
+      hoverIsVisible: false
     },
     {
       title: 'Let\'s be honest, it was the plan all along.',
@@ -155,7 +159,8 @@ app.controller("RedditController", function($scope) {
       date: moment('2016-05-05T00:40:51.177Z').fromNow(),
       comments: [],
       openComments: false,
-      commentForm: false
+      commentForm: false,
+      hoverIsVisible: false
     },
     {
       title: 'Ay yo, Mary Magdalen!',
@@ -175,7 +180,8 @@ app.controller("RedditController", function($scope) {
         }
       ],
       openComments: false,
-      commentForm: false
+      commentForm: false,
+      hoverIsVisible: false
     }
   ];
 
@@ -185,7 +191,8 @@ app.controller("RedditController", function($scope) {
       votes: 0,
       comment: [],
       openComments: false,
-      commentForm: false
+      commentForm: false,
+      hoverIsVisible: false
     };
 
     $scope.view[formName] = angular.copy(clearedForm);
@@ -211,5 +218,23 @@ app.controller("RedditController", function($scope) {
       }
     }
   };
+
+  $scope.view.showHoverZoom = function(image) {
+    for (var i = 0; i < $scope.view.posts.length; i++) {
+      if (image === $scope.view.posts[i].image) {
+        $scope.view.posts[i].hoverIsVisible = true;
+        return;
+      }
+    }
+  }
+
+  $scope.view.hideHoverZoom = function(image) {
+    for (var i = 0; i < $scope.view.posts.length; i++) {
+      if (image === $scope.view.posts[i].image) {
+        $scope.view.posts[i].hoverIsVisible = false;
+        return;
+      }
+    }
+  }
 
 });

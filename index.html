@@ -19,7 +19,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href='/'>
+          <a class="navbar-brand" href='#'>
             <span>Reddit Clone</span>
           </a>
         </div>
@@ -28,16 +28,16 @@
             <li>
               <a href='#' ng-click="view.openPostForm()">+ Submit Post</a>
             <li>
-            <li>
-              <select ng-model="view.filter">
+            <li class="sort-by">
+              <select ng-model="view.filter" class="form-control">
                 <option value="votes">Sort By Votes</option>
                 <option value="date">Sort By Date</option>
                 <option value="title">Sort By Title</option>
               </select>
             </li>
-            <li>
+            <li class="search-bar">
               <form name="search">
-                <input type="text" placeholder="Search" ng-model="view.search">
+                <input type="text" placeholder="Search" ng-model="view.search" class="form-control">
               </form>
             </li>
           </ul>
@@ -74,7 +74,10 @@
                 </a>
               </div>
               <div class="col-md-3 image-container">
-                <a href="{{post.image}}" target="_blank"><div style="background-image: url({{post.image}})" class="post-image"></div></a>
+                <a href="{{post.image}}" target="_blank"><div style="background-image: url({{post.image}})" class="post-image" ng-mouseenter="view.showHoverZoom(post.image)" ng-mouseleave="view.hideHoverZoom(post.image)"></div></a>
+              </div>
+              <div class="hoverzoom" ng-show="post.hoverIsVisible">
+                <img class="hoverzoom-img" ng-src="{{post.image}}">
               </div>
               <div class="col-md-8 detail-section">
                 <p class="post-title">{{post.title}}</p>
