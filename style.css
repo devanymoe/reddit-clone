@@ -4,6 +4,10 @@
   margin-top: 70px;
 }
 
+/*POST FORM STYLES*/
+
+
+
 /*POST STYLES*/
 
 .post-container {
@@ -37,6 +41,10 @@
   color: #aaa;
 }
 
+.detail-section {
+  padding-right: 42px;
+}
+
 .vote-number {
   margin-top: 12px;
 }
@@ -55,7 +63,7 @@
 }
 
 .post-title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
 }
 

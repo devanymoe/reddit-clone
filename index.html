@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Reddit Clone</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
+    <link rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script( src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
   </head>
@@ -25,7 +25,7 @@
         <div class="collapse navbar-collapse" id='navbar-collapse'>
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href='#'>+ Submit Post</a>
+              <a href='#' ng-click="view.openPost()">+ Submit Post</a>
             <li>
             <li>
               <select ng-model="filter">
@@ -45,32 +45,47 @@
     </div>
 
     <div class="container">
+      <div class="row new-post-container" ng-show="view.newPostOpen">
+        <form name="newPost" ng-submit="view.submitPost()">
+          <label for="author">Username</label>
+          <input ng-model="view.newPost.author" type="text" id="author">
+          <label for="title">Title</label>
+          <input ng-model="view.newPost.title" type="text" id="title">
+          <label for="image">Image URL</label>
+          <input ng-model="view.newPost.image" type="text" id="image">
+          <label for="description">Description</label>
+          <input ng-model="view.newPost.description" type="text" id="description">
+          <button type="submit">Submit Post</button>
+          <button type="button" ng-click="view.cancelPost()">Cancel</button>
+        </form>
+      </div>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
           <div class="row post-container" ng-repeat="post in view.posts | orderBy:filter">
             <div class="col-md-1 vote-section">
-              <a ng-click="view.upVote($index)">
+              <a ng-click="view.upVote(post.title)">
                 <i class="fa fa-arrow-up fa-lg" aria-hidden="true"></i>
               </a>
                 <p class="vote-number" ng-class="{'upVote': post.votes > 0, 'downVote': post.votes < 0}">{{post.votes}}</p>
-              <a ng-click="view.downVote($index)">
+              <a ng-click="view.downVote(post.title)">
                 <i class="fa fa-arrow-down fa-lg" aria-hidden="true"></i>
               </a>
             </div>
             <div class="col-md-3 image-container">
-              <div style="background-image: url({{post.image}})" class="post-image"></div>
+              <a href="{{post.image}}" target="_blank"><div style="background-image: url({{post.image}})" class="post-image"></div></a>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 detail-section">
               <p class="post-title">{{post.title}}</p>
               <p>Submitted {{post.date}} by {{post.author}}</p>
               <p>{{post.description}}</p>
-              <p>{{post.comments.length}} comments | <span>Add comment</span></p>
+              <p>{{post.comments.length}} <ng-pluralize count="post.comments.length" when="{'1': 'comment', 'other': 'comments'}"></ng-pluralize> | <span>Add comment</span></p>
             </div>
           </div>
         </div>
       </div>
     </div>
 
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
     <script type="text/javascript" src="app.js"></script>
   </body>

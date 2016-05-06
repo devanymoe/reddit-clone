@@ -2,16 +2,43 @@ var app = angular.module("redditClone", []);
 app.controller("RedditController", function($scope) {
   $scope.view = {};
 
-  $scope.view.newPost = {};
-  $scope.view.newComment = {};
+  $scope.view.newPostOpen = false;
+
+  $scope.view.newPost = {
+    date: moment(new Date()).fromNow(),
+    votes: 0,
+    comments: []
+  };
+  $scope.view.newComment = {
+    date: moment(new Date()).fromNow()
+  };
   $scope.view.search = {};
 
-  $scope.view.upVote = function(index) {
-    $scope.view.posts[index].votes++;
+  $scope.view.cancelPost = function() {
+    $scope.view.newPostOpen = false;
+    $scope.view.clearForm(newPost);
   }
 
-  $scope.view.downVote = function(index) {
-    $scope.view.posts[index].votes--;
+  $scope.view.openPost = function() {
+    $scope.view.newPostOpen = true;
+  }
+
+  $scope.view.upVote = function(title) {
+    for (var i = 0; i < $scope.view.posts.length; i++) {
+      if (title === $scope.view.posts[i].title) {
+        $scope.view.posts[i].votes++;
+        return;
+      }
+    }
+  }
+
+  $scope.view.downVote = function(title) {
+    for (var i = 0; i < $scope.view.posts.length; i++) {
+      if (title === $scope.view.posts[i].title) {
+        $scope.view.posts[i].votes--;
+        return;
+      }
+    }
   }
 
   $scope.view.posts = [
@@ -21,8 +48,17 @@ app.controller("RedditController", function($scope) {
       image: 'https://i.imgur.com/OMAvgUd.jpg',
       votes: 3262,
       description: 'Gummi bears dragée jelly sesame snaps jujubes. Cheesecake chocolate cake marshmallow. Brownie lollipop powder. Candy canes oat cake pudding pastry. Topping wafer topping. Candy canes jelly-o jelly danish caramels chocolate cake chocolate brownie.',
-      date: new Date(),
-      comments: []
+      date: moment(new Date()).fromNow(),
+      comments: [
+        {
+          author: 'Devany Moe',
+          text: 'This post sucks'
+        },
+        {
+          author: 'Brian Mathews',
+          text: 'This post rocks'
+        }
+      ]
     },
     {
       title: 'One of us! One of us!',
@@ -30,7 +66,7 @@ app.controller("RedditController", function($scope) {
       image: 'http://i.imgur.com/mqxqXyO.jpg',
       votes: 1247,
       description: 'Candy sweet oat cake biscuit. Tart carrot cake candy. Tart chupa chups sweet chupa chups oat cake. Wafer marshmallow cake halvah caramels dessert marshmallow sweet. Candy canes pudding sweet roll gingerbread danish powder chocolate biscuit. Bear claw jujubes sweet chocolate sweet lemon drops pie jelly beans tart.',
-      date: new Date(),
+      date: moment('2016-05-04T00:43:51.177Z').fromNow(),
       comments: []
     },
     {
@@ -39,7 +75,7 @@ app.controller("RedditController", function($scope) {
       image: 'http://i.imgur.com/q4JoNQC.jpg',
       votes: 752,
       description: 'Halvah cake muffin marshmallow cake ice cream. Pastry jelly beans danish dragée wafer soufflé bonbon dessert chupa chups. Cheesecake apple pie candy chupa chups liquorice brownie wafer jujubes. Ice cream lollipop biscuit gingerbread caramels marshmallow soufflé jelly beans.',
-      date: new Date(),
+      date: moment('2016-04-01T00:43:51.177Z').fromNow(),
       comments: []
     },
     {
@@ -63,16 +99,21 @@ app.controller("RedditController", function($scope) {
   ];
 
   $scope.view.clearForm = function(formName) {
-    var clearedForm = {};
+    var clearedForm = {
+      date: moment(new Date()).fromNow(),
+      votes: 0,
+      comment: []
+    };
 
-    $scope.formName = angular.copy(clearedForm);
-    $scope.formName.$setPristine();
-    $scope.formName.$setUntouched();
+    $scope.view[formName] = angular.copy(clearedForm);
+    $scope[formName].$setPristine();
+    $scope[formName].$setUntouched();
   };
 
   $scope.view.submitPost = function() {
     $scope.view.posts.push($scope.view.newPost);
-    $scope.view.clearForm(newPost);
+    $scope.view.clearForm('newPost');
+    $scope.view.newPostOpen = false;
   };
 
   $scope.view.submitComment = function(index) {
