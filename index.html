@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script( src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="style.css">
   </head>
   <body ng-app="redditClone" ng-controller="RedditController">
@@ -25,7 +26,7 @@
         <div class="collapse navbar-collapse" id='navbar-collapse'>
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href='#' ng-click="view.openPost()">+ Submit Post</a>
+              <a href='#' ng-click="view.openPostForm()">+ Submit Post</a>
             <li>
             <li>
               <select ng-model="filter">
@@ -61,24 +62,51 @@
       </div>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <div class="row post-container" ng-repeat="post in view.posts | orderBy:filter">
-            <div class="col-md-1 vote-section">
-              <a ng-click="view.upVote(post.title)">
-                <i class="fa fa-arrow-up fa-lg" aria-hidden="true"></i>
-              </a>
-                <p class="vote-number" ng-class="{'upVote': post.votes > 0, 'downVote': post.votes < 0}">{{post.votes}}</p>
-              <a ng-click="view.downVote(post.title)">
-                <i class="fa fa-arrow-down fa-lg" aria-hidden="true"></i>
-              </a>
+          <div class="post-container" ng-repeat="post in view.posts | orderBy:filter">
+            <div class="row">
+              <div class="col-md-1 vote-section">
+                <a ng-click="view.upVote(post.title)">
+                  <i class="fa fa-arrow-up fa-lg" aria-hidden="true"></i>
+                </a>
+                  <p class="vote-number" ng-class="{'upVote': post.votes > 0, 'downVote': post.votes < 0}">{{post.votes}}</p>
+                <a ng-click="view.downVote(post.title)">
+                  <i class="fa fa-arrow-down fa-lg" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="col-md-3 image-container">
+                <a href="{{post.image}}" target="_blank"><div style="background-image: url({{post.image}})" class="post-image"></div></a>
+              </div>
+              <div class="col-md-8 detail-section">
+                <p class="post-title">{{post.title}}</p>
+                <p>{{post.description}}</p>
+                <p class="post-detail">
+                  Submitted {{post.date}} by {{post.author}}&nbsp;&nbsp; | &nbsp;&nbsp;
+                  <a href="#" ng-click="view.showComments(post.title)">{{post.comments.length}}
+                    <ng-pluralize count="post.comments.length" when="{'1': 'comment', 'other': 'comments'}"></ng-pluralize>
+                  </a>
+                  &nbsp;&nbsp;|&nbsp;&nbsp;
+                  <a href="#" ng-click="view.openCommentForm(post.title)">Add comment</a>
+                </p>
+              </div>
             </div>
-            <div class="col-md-3 image-container">
-              <a href="{{post.image}}" target="_blank"><div style="background-image: url({{post.image}})" class="post-image"></div></a>
+            <div class="row comments-section" ng-repeat="comment in post.comments" ng-show="post.openComments === true">
+              <div class="col-md-4"></div>
+              <div class="col-md-8">
+                <p>{{comment.username}}: {{comment.text}}</p>
+              </div>
             </div>
-            <div class="col-md-8 detail-section">
-              <p class="post-title">{{post.title}}</p>
-              <p>Submitted {{post.date}} by {{post.author}}</p>
-              <p>{{post.description}}</p>
-              <p>{{post.comments.length}} <ng-pluralize count="post.comments.length" when="{'1': 'comment', 'other': 'comments'}"></ng-pluralize> | <span>Add comment</span></p>
+            <div class="row comment-form" ng-show="post.commentForm === true">
+              <div class="col-md-4"></div>
+              <div class="col-md-8">
+                <form name="submitComment" ng-submit="view.submitComment(post.title)">
+                  <label for="username">Username</label>
+                  <input type="text" ng-model="view.newComment.username" id="username">
+                  <label for="text">Comment</label>
+                  <input type="text" ng-model="view.newComment.text" id="text">
+                  <button type="submit">Submit</button>
+                  <button type="button" ng-click="view.cancelComment(post.title)">Cancel</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>

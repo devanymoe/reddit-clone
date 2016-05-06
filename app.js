@@ -7,7 +7,9 @@ app.controller("RedditController", function($scope) {
   $scope.view.newPost = {
     date: moment(new Date()).fromNow(),
     votes: 0,
-    comments: []
+    comments: [],
+    openComments: false,
+    commentForm: false
   };
   $scope.view.newComment = {
     date: moment(new Date()).fromNow()
@@ -16,11 +18,32 @@ app.controller("RedditController", function($scope) {
 
   $scope.view.cancelPost = function() {
     $scope.view.newPostOpen = false;
-    $scope.view.clearForm(newPost);
+    $scope.view.clearForm('newPost');
   }
 
-  $scope.view.openPost = function() {
+  $scope.view.cancelComment = function(title) {
+    event.preventDefault();
+    for (var i = 0; i < $scope.view.posts.length; i++) {
+      if (title === $scope.view.posts[i].title) {
+        $scope.view.posts[i].commentForm = false;
+        $scope.view.clearForm('newComment');
+        return;
+      }
+    }
+  }
+
+  $scope.view.openPostForm = function() {
     $scope.view.newPostOpen = true;
+  }
+
+  $scope.view.openCommentForm = function(title) {
+    event.preventDefault();
+    for (var i = 0; i < $scope.view.posts.length; i++) {
+      if (title === $scope.view.posts[i].title) {
+        $scope.view.posts[i].commentForm = true;
+        return;
+      }
+    }
   }
 
   $scope.view.upVote = function(title) {
@@ -41,6 +64,21 @@ app.controller("RedditController", function($scope) {
     }
   }
 
+  $scope.view.showComments = function(title) {
+    event.preventDefault();
+    for (var i = 0; i < $scope.view.posts.length; i++) {
+      if (title === $scope.view.posts[i].title) {
+        if ($scope.view.posts[i].openComments === false) {
+          $scope.view.posts[i].openComments = true;
+        }
+        else {
+          $scope.view.posts[i].openComments = false;
+        }
+        return;
+      }
+    }
+  }
+
   $scope.view.posts = [
     {
       title: 'M[boyfriends]RW I come home telling him I had a bad day.',
@@ -51,14 +89,16 @@ app.controller("RedditController", function($scope) {
       date: moment(new Date()).fromNow(),
       comments: [
         {
-          author: 'Devany Moe',
+          username: 'Devany Moe',
           text: 'This post sucks'
         },
         {
-          author: 'Brian Mathews',
+          username: 'Brian Mathews',
           text: 'This post rocks'
         }
-      ]
+      ],
+      openComments: false,
+      commentForm: false
     },
     {
       title: 'One of us! One of us!',
@@ -67,7 +107,9 @@ app.controller("RedditController", function($scope) {
       votes: 1247,
       description: 'Candy sweet oat cake biscuit. Tart carrot cake candy. Tart chupa chups sweet chupa chups oat cake. Wafer marshmallow cake halvah caramels dessert marshmallow sweet. Candy canes pudding sweet roll gingerbread danish powder chocolate biscuit. Bear claw jujubes sweet chocolate sweet lemon drops pie jelly beans tart.',
       date: moment('2016-05-04T00:43:51.177Z').fromNow(),
-      comments: []
+      comments: [],
+      openComments: false,
+      commentForm: false
     },
     {
       title: 'I see what they did there',
@@ -76,7 +118,9 @@ app.controller("RedditController", function($scope) {
       votes: 752,
       description: 'Halvah cake muffin marshmallow cake ice cream. Pastry jelly beans danish dragée wafer soufflé bonbon dessert chupa chups. Cheesecake apple pie candy chupa chups liquorice brownie wafer jujubes. Ice cream lollipop biscuit gingerbread caramels marshmallow soufflé jelly beans.',
       date: moment('2016-04-01T00:43:51.177Z').fromNow(),
-      comments: []
+      comments: [],
+      openComments: false,
+      commentForm: false
     },
     {
       title: 'Let\'s be honest, it was the plan all along.',
@@ -85,7 +129,9 @@ app.controller("RedditController", function($scope) {
       votes: 2216,
       description: 'Gummies jelly-o dragée candy canes. Soufflé sugar plum pastry cupcake sugar plum cotton candy chupa chups. Dragée dessert tart jelly beans gummies soufflé fruitcake sweet roll. Caramels ice cream caramels biscuit cake candy canes dragée carrot cake.',
       date: new Date(),
-      comments: []
+      comments: [],
+      openComments: false,
+      commentForm: false
     },
     {
       title: 'Ay yo, Mary Magdalen!',
@@ -94,7 +140,9 @@ app.controller("RedditController", function($scope) {
       votes: 2,
       description: 'Ice cream soufflé cheesecake sesame snaps candy canes tart chocolate donut. Icing pastry sesame snaps jelly chupa chups oat cake. Danish chupa chups cake candy ice cream lollipop bear claw jelly. Lemon drops sweet gummi bears marzipan chocolate powder soufflé jelly-o chupa chups.',
       date: new Date(),
-      comments: []
+      comments: [],
+      openComments: false,
+      commentForm: false
     }
   ];
 
@@ -102,7 +150,9 @@ app.controller("RedditController", function($scope) {
     var clearedForm = {
       date: moment(new Date()).fromNow(),
       votes: 0,
-      comment: []
+      comment: [],
+      openComments: false,
+      commentForm: false
     };
 
     $scope.view[formName] = angular.copy(clearedForm);
@@ -116,9 +166,16 @@ app.controller("RedditController", function($scope) {
     $scope.view.newPostOpen = false;
   };
 
-  $scope.view.submitComment = function(index) {
-    $scope.view.posts[index].comments.push($scope.view.newComment);
-    $scope.view.clearForm(newComment);
+  $scope.view.submitComment = function(title) {
+    event.preventDefault();
+    for (var i = 0; i < $scope.view.posts.length; i++) {
+      if (title === $scope.view.posts[i].title) {
+        $scope.view.posts[i].commentForm = false;
+        $scope.view.posts[i].comments.push($scope.view.newComment);
+        $scope.view.clearForm('newComment');
+        return;
+      }
+    }
   };
 
 });

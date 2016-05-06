@@ -1,5 +1,9 @@
 /*MAIN STYLES*/
 
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
 .container {
   margin-top: 70px;
 }
@@ -16,6 +20,11 @@
   border-bottom: 1px solid #ddd;
 }
 
+.post-container:last-child {
+  border-bottom: none;
+  margin-bottom: 30px;
+}
+
 .post-image {
   width: 160px;
   height: 160px;
@@ -27,7 +36,7 @@
 .image-container {
   display: flex;
   justify-content: center;
-  padding-top: 4px;
+  padding-top: 8px;
 }
 
 .vote-section {
@@ -63,8 +72,13 @@
 }
 
 .post-title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
+}
+
+.post-detail {
+  color: #999;
+  margin-bottom: 5px;
 }
 
 /*NAV STYLES*/
@@ -107,4 +121,10 @@
 .navbar ul a:hover {
   color: #000;
   background-color: #EFF7FF;
+}
+
+/*TEXT STYLES*/
+
+a {
+  color: #336699;
 }
