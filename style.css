@@ -10,6 +10,10 @@ body {
 
 /*POST FORM STYLES*/
 
+.error {
+  color: #a94442;
+}
+
 .button-container {
   margin-top: -1px;
 }
@@ -30,13 +34,31 @@ body {
   background-color: #eee;
 }
 
+/*COMMENT FORM STYLES*/
+
+.comment-form {
+  margin-left: 15px;
+  margin-top: 30px;
+}
+
+.comment-section {
+  margin-left: -14px;
+}
+
+.comment-form-container {
+
+}
+
+.comment-form-container .comment-text {
+  height: 82px;
+}
 
 /*POST STYLES*/
 
 .post-container {
   padding-bottom: 40px;
   padding-top: 40px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #eee;
 }
 
 .post-container:last-child {
@@ -151,10 +173,10 @@ body {
 
 .navbar ul a:hover, .navbar ul a:focus {
   color: #063B6F;
-  background-color: #CEE3F8;
+  background-color: #eee;
 }
 
-.search-bar, .sort-by {
+.search-bar {
   width: 200px;
   margin-left: 20px;
 }
