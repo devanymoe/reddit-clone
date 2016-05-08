@@ -32,10 +32,10 @@
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort by <span class="caret"></span></a>
-              <ul ng-model="view.filter" class="dropdown-menu">
-                <li><a href="#" ng-click="view.filterBy('votes')">votes</a></li>
-                <li><a href="#" ng-click="view.filterBy('date')">date</a></li>
-                <li><a href="#" ng-click="view.filterBy('title')">title</a></li>
+              <ul class="dropdown-menu">
+                <li><a href="#" ng-click="view.filterBy('votes')">Votes</a></li>
+                <li><a href="#" ng-click="view.filterBy('date')">Date</a></li>
+                <li><a href="#" ng-click="view.filterBy('title')">Title</a></li>
               </ul>
             </li>
             <li class="search-bar">
@@ -53,25 +53,25 @@
         <div class="col-md-4">
           <div class="form-group" ng-class="{'has-error': newPost.username.$invalid && newPost.username.$touched, 'has-success': newPost.username.$valid && newPost.username.$touched}">
             <label for="author">Username</label>
-            <input ng-model="view.newPost.author" type="text" id="author" name="username" class="form-control" ng-minlength=5 ng-maxlength=12 ng-required="required">
-            <p ng-show="(newPost.username.$invalid && newPost.username.$touched) || (newPost.$submitted && newPost.username.$error)" class="error">Please enter a valid username.</p>
+            <input ng-model="view.newPost.author" type="text" id="author" name="username" class="form-control" ng-minlength=5 ng-maxlength=12 required>
+            <p ng-show="(newPost.username.$touch || newPost.$submitted) && newPost.username.$invalid" class="error">Please enter a valid username.</p>
           </div>
           <div class="form-group" ng-class="{'has-error': newPost.title.$invalid && newPost.title.$touched, 'has-success': newPost.title.$valid && newPost.title.$touched}">
             <label for="title">Title</label>
-            <input ng-model="view.newPost.title" type="text" id="title" class="form-control" name="title" ng-minlength=2 ng-maxlength=60 ng-required="required">
-            <p ng-show="(newPost.title.$invalid && newPost.title.$touched) || (newPost.$submitted && newPost.title.$error)" class="error">Please enter a valid title.</p>
+            <input ng-model="view.newPost.title" type="text" id="title" class="form-control" name="title" ng-minlength=2 ng-maxlength=60 required>
+            <p ng-show="(newPost.title.$touch || newPost.$submitted) && newPost.title.$invalid" class="error">Please enter a valid title.</p>
           </div>
           <div class="form-group" ng-class="{'has-error': newPost.image.$invalid && newPost.image.$touched, 'has-success': newPost.image.$valid && newPost.image.$touched}">
             <label for="image">Image URL</label>
-            <input ng-model="view.newPost.image" type="url" id="image" class="form-control" name="image" ng-required="required">
-            <p ng-show="(newPost.image.$invalid && newPost.image.$touched) || (newPost.$submitted && newPost.image.$error)" class="error">Please enter a valid image URL.</p>
+            <input ng-model="view.newPost.image" type="url" id="image" class="form-control" name="image" required>
+            <p ng-show="(newPost.image.$touch || newPost.$submitted) && newPost.image.$invalid" class="error">Please enter a valid image URL.</p>
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="description">Description</label>
-            <textarea ng-model="view.newPost.description" type="text" id="description" class="form-control" rows="6" name="description" ng-class="{'has-error': newPost.description.$invalid && newPost.description.$touched, 'has-success': newPost.description.$valid && newPost.description.$touched}" ng-minlength=10 ng-maxlength=300 ng-required="required"></textarea>
-            <p ng-show="(newPost.description.$invalid && newPost.description.$touched) || (newPost.$submitted && newPost.description.$error)" class="error">Please enter a valid description.</p>
+            <textarea ng-model="view.newPost.description" type="text" id="description" class="form-control" rows="6" name="description" ng-class="{'has-error': newPost.description.$invalid && newPost.description.$touched, 'has-success': newPost.description.$valid && newPost.description.$touched}" ng-minlength=10 ng-maxlength=300 required></textarea>
+            <p ng-show="(newPost.description.$touch || newPost.$submitted) && newPost.description.$invalid" class="error">Please enter a valid description.</p>
           </div>
           <div class="form-group button-container">
             <div class="col-md-6 button-one">
@@ -122,7 +122,8 @@
             <div class="row comments-section" ng-repeat="comment in post.comments" ng-show="post.openComments === true">
               <div class="col-md-4"></div>
               <div class="col-md-8">
-                <p>{{comment.username}}: {{comment.text}}</p>
+                <p class="username">{{comment.username}}</p>
+                <p class="comment-body">{{comment.text}}</p>
               </div>
             </div>
             <div
@@ -147,7 +148,7 @@
                         <button type="submit" class="form-control btn btn-primary">Submit</button>
                       </div>
                       <div class="col-md-6 button-two">
-                        <button type="button" ng-click="view.cancelComment(post.title)" class="form-control btn btn-primary">Cancel</button>
+                        <button type="button" ng-click="view.cancelComment(post.title, newComment)" class="form-control btn btn-primary">Cancel</button>
                       </div>
                     </div>
                   </div>

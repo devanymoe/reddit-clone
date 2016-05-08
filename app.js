@@ -24,16 +24,18 @@ app.controller("RedditController", function($scope) {
   }
 
   $scope.view.cancelPost = function() {
+    var form = $scope.newPost;
+
     $scope.view.newPostOpen = false;
-    $scope.view.clearForm('newPost');
+    $scope.view.clearForm($scope.newPost);
   }
 
-  $scope.view.cancelComment = function(title) {
+  $scope.view.cancelComment = function(title, form) {
     event.preventDefault();
     for (var i = 0; i < $scope.view.posts.length; i++) {
       if (title === $scope.view.posts[i].title) {
         $scope.view.posts[i].commentForm = false;
-        $scope.view.clearForm('newComment');
+        $scope.view.clearForm(form);
         return;
       }
     }
@@ -105,7 +107,7 @@ app.controller("RedditController", function($scope) {
       image: 'https://i.imgur.com/OMAvgUd.jpg',
       votes: 684,
       description: 'Gummi bears dragée jelly sesame snaps jujubes. Cheesecake chocolate cake marshmallow. Brownie lollipop powder. Candy canes oat cake pudding pastry. Topping wafer topping. Candy canes jelly-o jelly danish caramels chocolate cake chocolate brownie.',
-      date: moment(new Date()).fromNow(),
+      date: moment('2016-05-07T00:43:51.177Z').fromNow(),
       comments: [
         {
           username: 'EspadaNumberNine',
@@ -124,7 +126,7 @@ app.controller("RedditController", function($scope) {
       title: 'One of us! One of us!',
       author: 'feminazi_gold',
       image: 'http://i.imgur.com/mqxqXyO.jpg',
-      votes: 2,
+      votes: -2,
       description: 'Candy sweet oat cake biscuit. Tart carrot cake candy. Tart chupa chups sweet chupa chups oat cake. Wafer marshmallow cake halvah caramels dessert marshmallow sweet. Candy canes pudding sweet roll gingerbread danish powder chocolate biscuit. Bear claw jujubes sweet chocolate sweet lemon drops pie jelly beans tart.',
       date: moment('2016-05-04T00:43:51.177Z').fromNow(),
       comments: [
@@ -211,7 +213,7 @@ app.controller("RedditController", function($scope) {
         comment: [],
         openComments: false,
         commentForm: false,
-        hoverIsVisible: false
+        hoverIsVisible: false,
       };
     }
 
@@ -221,9 +223,9 @@ app.controller("RedditController", function($scope) {
       };
     }
 
-    $scope.view[form.$name] = angular.copy(clearedForm);
     form.$setPristine();
     form.$setUntouched();
+    $scope.view[form.$name] = angular.copy(clearedForm);
   };
 
   $scope.view.submitPost = function() {

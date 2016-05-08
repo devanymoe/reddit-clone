@@ -36,6 +36,15 @@ body {
 
 /*COMMENT FORM STYLES*/
 
+.username {
+
+  margin-bottom: -3px;
+}
+
+.comment-body {
+  color: #999;
+}
+
 .comment-form {
   margin-left: 15px;
   margin-top: 30px;
