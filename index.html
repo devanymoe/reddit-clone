@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Reddit Clone</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -89,7 +90,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <div class="post-container" ng-repeat="post in view.posts | orderBy:view.filter | filter:view.search">
+          <div class="post-container fadeInOut" ng-repeat="post in view.posts | orderBy:view.filter | filter:view.search">
             <div class="row">
               <div class="col-md-1 vote-section">
                 <a ng-click="view.upVote(post.title)">
@@ -119,7 +120,7 @@
                 </p>
               </div>
             </div>
-            <div class="row comments-section" ng-repeat="comment in post.comments" ng-show="post.openComments === true">
+            <div class="row comments-section fadeInOut" ng-repeat="comment in post.comments" ng-show="post.openComments === true">
               <div class="col-md-4"></div>
               <div class="col-md-8">
                 <p class="username">{{comment.username}}</p>
@@ -131,17 +132,19 @@
               <div class="col-md-1"></div>
               <div class="col-md-11 comment-form-container">
                 <form name="newComment" ng-submit="view.submitComment(post.title, newComment)" class="form-comment">
-                  <div class="col-md-6 comment-section">
+                  <div class="col-md-6 comment-section" ng-class="{'has-error': newComment.text.$invalid && newComment.text.$touched, 'has-success': newComment.text.$valid && newComment.text.$touched}">
                     <div class="form-group">
                       <label for="text">Comment</label>
-                      <textarea type="text" ng-model="view.newComment.text" id="text" class="form-control comment-text"></textarea>
+                      <textarea type="text" ng-model="view.newComment.text" name="text" id="text" class="form-control comment-text" required></textarea>
+                      <p ng-show="(newComment.text.$touch || newComment.$submitted) && newComment.text.$invalid" class="error">Please enter a valid comment.</p>
                     </div>
                   </div>
 
                   <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': newComment.username.$invalid && newComment.username.$touched, 'has-success': newComment.username.$valid && newComment.username.$touched}">
                       <label for="username">Username</label>
-                      <input type="text" ng-model="view.newComment.username" id="username" class="form-control">
+                      <input type="text" ng-model="view.newComment.username" name="username" id="username" class="form-control" ng-maxlength=12 ng-minlength=5 required>
+                      <p ng-show="(newComment.username.$touch || newComment.$submitted) && newComment.username.$invalid" class="error">Please enter a valid username.</p>
                     </div>
                     <div class="form-group button-container">
                       <div class="col-md-6 button-one">

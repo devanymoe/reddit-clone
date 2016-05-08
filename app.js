@@ -1,4 +1,4 @@
-var app = angular.module("redditClone", []);
+var app = angular.module("redditClone", ['ngAnimate']);
 app.controller("RedditController", function($scope) {
   $scope.view = {};
 
